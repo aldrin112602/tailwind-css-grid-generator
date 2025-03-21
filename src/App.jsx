@@ -294,11 +294,19 @@ const App = () => {
                   `  <div ${type === "HTML" ? "class" : "className"}="${
                     areaClasses[index]
                   }">
-        ${type === "JSX" ? `{/* ${
-          positiveQuotes[Math.floor(Math.random() * positiveQuotes.length)]
-        } */}`: `<!--- ${
-          positiveQuotes[Math.floor(Math.random() * positiveQuotes.length)]
-        } --->`}
+        ${
+          type === "JSX"
+            ? `{/* ${
+                positiveQuotes[
+                  Math.floor(Math.random() * positiveQuotes.length)
+                ]
+              } */}`
+            : `<!--- ${
+                positiveQuotes[
+                  Math.floor(Math.random() * positiveQuotes.length)
+                ]
+              } --->`
+        }
   </div>`
               )
               .join("\n") +
@@ -378,7 +386,9 @@ const App = () => {
               <line x1="15" y1="3" x2="15" y2="21"></line>
             </svg>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold">Tailwind Grid Generator</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">
+            Tailwind Grid Generator
+          </h1>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
