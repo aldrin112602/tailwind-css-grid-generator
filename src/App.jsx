@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CodeBlock from "./components/CodeBlock";
 import Footer from "./components/Footer";
-
+import SelectType from "./components/SelectType";
 
 const App = () => {
   const [columns, setColumns] = useState(8);
@@ -22,6 +22,37 @@ const App = () => {
     lg: true,
     xl: true,
   });
+
+  const [type, setType] = useState("HTML");
+
+  const positiveQuotes = [
+    "Believe you can, and you're halfway there. – Theodore Roosevelt",
+    "Keep your face always toward the sunshine, and shadows will fall behind you. – Walt Whitman",
+    "You are never too old to set another goal or to dream a new dream. – C.S. Lewis",
+    "The only way to do great work is to love what you do. – Steve Jobs",
+    "Act as if what you do makes a difference. It does. – William James",
+    "Success is not how high you have climbed, but how you make a positive difference in the world. – Roy T. Bennett",
+    "Happiness is not by chance, but by choice. – Jim Rohn",
+    "Your limitation—it's only your imagination.",
+    "Push yourself, because no one else is going to do it for you.",
+    "Dream it. Wish it. Do it.",
+    "It always seems impossible until it’s done. – Nelson Mandela",
+    "Do what you can, with what you have, where you are. – Theodore Roosevelt",
+    "Difficulties in life are intended to make us better, not bitter. – Dan Reeves",
+    "Opportunities don't happen, you create them. – Chris Grosser",
+    "Work hard in silence, let success make the noise. – Frank Ocean",
+    "Don't watch the clock; do what it does. Keep going. – Sam Levenson",
+    "Be the change that you wish to see in the world. – Mahatma Gandhi",
+    "Everything you’ve ever wanted is on the other side of fear. – George Addair",
+    "If you want to lift yourself up, lift up someone else. – Booker T. Washington",
+    "Start where you are. Use what you have. Do what you can. – Arthur Ashe",
+    "Stay positive. Better days are on their way.",
+    "Doubt kills more dreams than failure ever will. – Suzy Kassem",
+    "Believe in yourself and all that you are. – Christian D. Larson",
+    "You don’t have to be great to start, but you have to start to be great. – Zig Ziglar",
+    "Positive thinking will let you do everything better than negative thinking will. – Zig Ziglar",
+    "What lies behind us and what lies before us are tiny matters compared to what lies within us. – Ralph Waldo Emerson",
+  ];
 
   // Initialize grid when rows or columns change
   useEffect(() => {
@@ -217,17 +248,17 @@ const App = () => {
       const areaWidth = area.endCol - area.startCol + 1;
       const areaHeight = area.endRow - area.startRow + 1;
 
-      let areaClass = `.${area.name} { `;
+      let areaClass = "";
 
       // Column span
       if (isResponsive) {
-        areaClass += `@apply col-span-1 `;
+        areaClass += `col-span-1 `;
         if (breakpoints.sm) areaClass += `sm:col-span-${areaWidth} `;
         if (breakpoints.md) areaClass += `md:col-span-${areaWidth} `;
         if (breakpoints.lg) areaClass += `lg:col-span-${areaWidth} `;
         if (breakpoints.xl) areaClass += `xl:col-span-${areaWidth} `;
       } else {
-        areaClass += `@apply col-span-${areaWidth} `;
+        areaClass += `col-span-${areaWidth} `;
       }
 
       // Row span
@@ -245,31 +276,33 @@ const App = () => {
       }
 
       // Row start
-      areaClass += `row-start-${area.startRow + 1};`;
-      areaClass += ` }`;
-
+      areaClass += `row-start-${area.startRow + 1}`;
       areaClasses.push(areaClass);
     });
 
     return (
       <>
-      
         <CodeBlock
+          type={type}
           code={
-            `<div className="${containerClasses.trim()}">\n` +
+            `<div ${
+              type === "HTML" ? "class" : "className"
+            }="${containerClasses.trim()}">\n` +
             areas
               .map(
-                (area) =>
-                  `  <div className="${area.name}">{/* Content for ${area.name} */}</div>`
+                (area, index) =>
+                  `  <div ${type === "HTML" ? "class" : "className"}="${
+                    areaClasses[index]
+                  }">
+        {/* ${
+          positiveQuotes[Math.floor(Math.random() * positiveQuotes.length)]
+        } */}
+  </div>`
               )
               .join("\n") +
             "\n</div>\n\n"
           }
           language="html"
-        />
-        <CodeBlock
-          code={"/* CSS Styles for Grid Areas */\n" + areaClasses.join("\n")}
-          language="css"
         />
       </>
     );
@@ -343,12 +376,8 @@ const App = () => {
               <line x1="15" y1="3" x2="15" y2="21"></line>
             </svg>
           </div>
-          <h1 className="text-3xl font-bold">Tailwind Grid Generator</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Tailwind Grid Generator</h1>
         </header>
-
-        <div className="text-center mb-4 text-yellow-400 italic">
-          built with ⚡ by Claude AI
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
@@ -609,14 +638,20 @@ const App = () => {
         {/* Code output section */}
         <div className="mt-8">
           <h2 className="text-xl font-bold mb-2">Generated Tailwind CSS</h2>
-          {generateTailwindCSS() || <CodeBlock
-          code={'<!--- Create some grid areas to generate Tailwind CSS --->'}
-          language="html"
-        />}
+          <SelectType type={type} setType={setType} />
+          {generateTailwindCSS() || (
+            <CodeBlock
+              code={
+                "<!--- Create some grid areas to generate Tailwind CSS --->"
+              }
+              type={type}
+              language="html"
+            />
+          )}
         </div>
       </div>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

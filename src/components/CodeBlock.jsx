@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 
-const CodeBlock = ({ code, language = "javascript" }) => {
+const CodeBlock = ({ type, code, language = "javascript" }) => {
   const [copied, setCopied] = useState(false);
   const codeRef = useRef(null);
 
@@ -10,7 +10,7 @@ const CodeBlock = ({ code, language = "javascript" }) => {
     if (codeRef.current) {
       codeRef.current.innerHTML = hljs.highlight(code, { language }).value;
     }
-  }, [code, language]);
+  }, [code, language, type]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
