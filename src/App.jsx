@@ -253,13 +253,14 @@ const App = () => {
 
     return (
       <>
+      
         <CodeBlock
           code={
-            `<div class="${containerClasses.trim()}">\n` +
+            `<div className="${containerClasses.trim()}">\n` +
             areas
               .map(
                 (area) =>
-                  `  <div class="${area.name}"><!-- Content for ${area.name} --></div>`
+                  `  <div className="${area.name}">{/* Content for ${area.name} */}</div>`
               )
               .join("\n") +
             "\n</div>\n\n"
