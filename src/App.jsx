@@ -294,9 +294,11 @@ const App = () => {
                   `  <div ${type === "HTML" ? "class" : "className"}="${
                     areaClasses[index]
                   }">
-        {/* ${
+        ${type === "JSX" ? `{/* ${
           positiveQuotes[Math.floor(Math.random() * positiveQuotes.length)]
-        } */}
+        } */}`: `<!--- ${
+          positiveQuotes[Math.floor(Math.random() * positiveQuotes.length)]
+        } --->`}
   </div>`
               )
               .join("\n") +
